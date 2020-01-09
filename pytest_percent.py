@@ -18,7 +18,9 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     global REQUIRED_PERCENT
-    REQUIRED_PERCENT = float(config.getoption('--required-percent'))
+    required_percent = config.getoption('--required-percent')
+    if required_percent:
+        REQUIRED_PERCENT = float(required_percent)
     if REQUIRED_PERCENT <= 1.0:
         REQUIRED_PERCENT *= 100
     REQUIRED_PERCENT = int(REQUIRED_PERCENT)
@@ -41,4 +43,4 @@ def required_percent():
     return REQUIRED_PERCENT
 
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'

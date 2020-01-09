@@ -17,7 +17,7 @@ setuptools.setup(
     maintainer_email='dillon.miller@swiftpage.com',
     license='MIT',
     url='https://github.com/dillonm197/pytest.percent',
-    description='Mark test sessions as successful based on a percentage of passed tests.',
+    description='Change the exit code of pytest test sessions when a required percent of tests pass.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     py_modules=['pytest_percent'],
