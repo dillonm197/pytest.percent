@@ -29,13 +29,14 @@ def pytest_configure(config):
 
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session):
-    testspassed = session.testscollected - session.testsfailed
-    passed_percent = int((testspassed / session.testscollected) * 100)
-    if passed_percent >= REQUIRED_PERCENT:
-        LOGGER.info(f'{passed_percent}% of tests passed, required {REQUIRED_PERCENT}%.')
-        session.exitstatus = pytest.ExitCode.OK
-    else:
-        LOGGER.error(f'{passed_percent}% of tests passed, required {REQUIRED_PERCENT}%.')
+    if session.exitstatus > 0 and session.testsfailed > 0:
+        testspassed = session.testscollected - session.testsfailed
+        passed_percent = int((testspassed / session.testscollected) * 100)
+        if passed_percent >= REQUIRED_PERCENT:
+            LOGGER.info(f'{passed_percent}% of tests passed, required {REQUIRED_PERCENT}%.')
+            session.exitstatus = pytest.ExitCode.OK
+        else:
+            LOGGER.error(f'{passed_percent}% of tests passed, required {REQUIRED_PERCENT}%.')
 
 
 @pytest.fixture(scope='session')
@@ -43,4 +44,4 @@ def required_percent():
     return REQUIRED_PERCENT
 
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'

@@ -2,15 +2,13 @@
 
 import setuptools
 
-import pytest_percent
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
 setuptools.setup(
     name='pytest-percent',
-    version=pytest_percent.__version__,
+    version='0.0.4',
     author='Dillon Miller',
     author_email='dillon.miller@swiftpage.com',
     maintainer='Dillon Miller',
