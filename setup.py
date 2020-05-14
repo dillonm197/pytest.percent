@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='pytest-percent',
-    version='0.0.4',
+    version='0.1.0',
     author='Dillon Miller',
     author_email='dillon.miller@swiftpage.com',
     maintainer='Dillon Miller',
@@ -30,9 +30,5 @@ setuptools.setup(
         'Operating System :: OS Independent',
         'License :: OSI Approved :: MIT License',
     ],
-    entry_points={
-        'pytest11': [
-            'pytest_percent = pytest_percent',
-        ],
-    },
+    entry_points={'pytest11': ['pytest_percent = pytest_percent']},
 )
