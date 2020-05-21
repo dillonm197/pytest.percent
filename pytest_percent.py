@@ -12,9 +12,8 @@ def pytest_addoption(parser):
         '--required-percent',
         action='store',
         type=int,
-        choices=range(0, 101),
         dest='percent',
-        help='Percent of tests required to pass.',
+        help='Percent of tests required to pass. (0/100)',
     )
 
 
@@ -47,8 +46,13 @@ class PercentPlugin:
 
     @pytest.hookimpl(trylast=True)
     def pytest_sessionfinish(self, session, exitstatus):
-        if exitstatus == pytest.ExitCode.TESTS_FAILED and session.testsfailed > 0:
-            passed_percent = 100 - int((session.testsfailed / session.testscollected) * 100)
+        stats = session.config.pluginmanager.get_plugin('terminalreporter').stats
+        # Using terminalreporter allows us to ignore tests marked with skip, xpass or xfail.
+        num_passed = len(stats.get('passed') or [])
+        num_failed = len(stats.get('failed') or [])
+        num_tests = num_passed + num_failed
+        if exitstatus == pytest.ExitCode.TESTS_FAILED and num_failed > 0:
+            passed_percent = int((num_passed / num_tests) * 100)
             if passed_percent >= self.required_percent:
                 LOGGER.info(f'{passed_percent}% of the {self.required_percent}% of required tests passed.')
                 session.exitstatus = pytest.ExitCode.OK
@@ -56,4 +60,4 @@ class PercentPlugin:
                 LOGGER.error(f'{passed_percent}% of the {self.required_percent}% of required tests passed.')
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.2'

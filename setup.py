@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='pytest-percent',
-    version='0.1.0',
+    version='0.1.2',
     author='Dillon Miller',
     author_email='dillon.miller@swiftpage.com',
     maintainer='Dillon Miller',
